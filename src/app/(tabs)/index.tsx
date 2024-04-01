@@ -6,7 +6,7 @@ import EditScreenInfo from '../../components/EditScreenInfo';
 import Colors from '@/src/constants/Colors';
  
 const product = products[0];
-export default function TabOneScreen() {
+export default function HomeScreen() {
   return (
     <ScrollView>
     <View>
