@@ -1,20 +1,35 @@
 import { View, Text,Image,StyleSheet,Pressable } from 'react-native'
 import React from 'react'
-import { Stack,useLocalSearchParams } from 'expo-router'
+import { Stack,useLocalSearchParams, useRouter } from 'expo-router'
 import products from '@/assets/data/products'
 import {useState} from 'react'
 import Button from '../../../components/Button'
+import { useCart } from '@/src/providers/CartProvider'
+import { PizzaSize } from '@/src/types'
+
 const ProductDetailsScreen = () => {
-  const [selectedSize, setSelectedSize] = useState('S');
-  const addToCart = () => {
-    console.warn('Added to cart -> ', selectedSize  );
-  }
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>('S');
+  const { addItem} = useCart();
 
+  const router = useRouter();
   
-
+  
+  
   const { id } = useLocalSearchParams();
-  const sizes = ['S', 'M', 'L', 'XL'];
+  console.log(id);
+  const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
   const product = products.find((product) => product.id.toString() === id);
+ console.log(product);
+  const addToCart = () => {
+    console.log('add to cart');
+    console.log(product);
+    if(!product){
+      return;
+    }
+    addItem(product, selectedSize);
+    router.push('/cart');
+    
+  }
   return (
     <View style={styles.container}>
       <Stack.Screen options={{title: product?.name}} />
@@ -55,7 +70,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginTop: 'auto',
+    marginTop: 10,
   },
   size:{
     width: 30,
