@@ -34,18 +34,10 @@ const ProductDetailsScreen = () => {
     <View style={styles.container}>
       <Stack.Screen options={{title: product?.name}} />
       <Image source={{uri: product?.image}} style={styles.image} />
-      <Text>Select size</Text>
-      <View style={styles.sizes}>
-      {sizes.map((size) => (
-        <Pressable onPress={()=>{ setSelectedSize(size)}}key={size} style={[styles.size,{backgroundColor:selectedSize === size? 'gainsboro':'white' }]}>
-          <Text style={[styles.sizeText,{color:selectedSize === size? 'black':'gray'}]}>{size}</Text>
-        </Pressable>
-        
-        ))}
-      </View>
+   
       
       <Text style={styles.price}>DKK {product?.price} </Text>
-      <Button text="Add to cart" onPress={addToCart} />
+      <Text style={styles.title}>{product?.name}</Text>
     </View>
   )
 }
