@@ -9,7 +9,8 @@ type ProductListItemProps = {
 export const defaultPizzaImage = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png'
 
 const ProductListItem = ({product }:ProductListItemProps) => {
-  const segments = useSegments()
+  const segments = useSegments();
+  console.log('segments here',segments);
   return (
     <Link href={`/${segments[0]}/menu/${product.id}`} asChild>
     <Pressable style={styles.container}>
