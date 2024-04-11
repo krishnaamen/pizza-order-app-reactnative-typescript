@@ -16,7 +16,7 @@ const SignUpScreen = () => {
       <TextInput
         value={email}
         onChangeText={setEmail}
-        placeholder="jon@gmail.com"
+        placeholder="kris@gmail.com"
         style={styles.input}
       />
 
