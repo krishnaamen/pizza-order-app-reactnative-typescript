@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet,TextInput,Image } from 'react-native'
+import { View, Text,StyleSheet,TextInput,Image,Alert } from 'react-native'
 import React,{useState} from 'react'
 import Button from '@/src/components/Button'
 import { defaultPizzaImage } from '@/src/components/ProductListItem';
@@ -63,6 +63,40 @@ const CreateProductScreen = () => {
           }
         return true;
     }   
+
+    const onSubmit = () => {
+        if(isUpdating){
+            onUpdate();
+        }else{
+            onCreate();
+        }
+    }   
+
+    const onUpdate = () => {
+        if(!validateInput()){
+            return;     }
+        setError('');
+        console.warn('Updating  the product', name, price  );
+
+        resetFields();
+
+    }
+   const  confirmDelete = () => { 
+        Alert.alert('Delete Product', 'Are you sure you want to delete this product?', [
+            {
+                text: 'Cancel',
+                style: 'cancel',
+            },
+            {
+                text: 'Delete',
+                style: 'destructive',
+                onPress: () => {
+                    console.warn('Delete');
+                    resetFields();
+                },
+            },
+        ]); 
+   }
     
 
   return (
@@ -75,7 +109,8 @@ const CreateProductScreen = () => {
       <Text style={styles.label}>Price (DKK)</Text>
       <TextInput value={price} onChangeText={setPrice} style={styles.input} keyboardType='numeric' placeholder='9.98'/>
         <Text style={{color: 'red'}}>{error}</Text>
-      <Button onPress={onCreate} text={isUpdating?'Update':'Create'}/>
+      <Button onPress={onSubmit} text={isUpdating?'Update':'Create'}/>
+      {isUpdating && <Text style={styles.textButton} onPress={confirmDelete}>Delete</Text>}
     </View>
   )
 }
@@ -108,6 +143,11 @@ const styles = StyleSheet.create({
                 color: Colors.light.tint,
                 marginVertical: 10,
             },
+            textButton: {
+                color: 'red',
+                alignSelf: 'center',
+                marginVertical: 10,
+            }
 })
 
 export default CreateProductScreen
